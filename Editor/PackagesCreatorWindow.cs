@@ -24,11 +24,13 @@ namespace PackagesCreator
 
         void OnGUI()
         {
-            if (!global::PackagesCreator.PackagesCreator.ExistsFolderToCreatePackages())
+            PackagesCreator.FolderToCreatePackages.DrawStringField();
+
+            if (!PackagesCreator.ExistsFolderToCreatePackages())
             {
                 if (GUILayout.Button("Create Packages Folder"))
                 {
-                    global::PackagesCreator.PackagesCreator.CreateFolderToCreatePackages();
+                    PackagesCreator.CreateFolderToCreatePackages();
                 }
 
                 return;
@@ -36,7 +38,7 @@ namespace PackagesCreator
 
             if (GUILayout.Button("Open Packages Folder"))
             {
-                global::PackagesCreator.PackagesCreator.OpenFolderToCreatePackages();
+                PackagesCreator.OpenFolderToCreatePackages();
             }
 
 
@@ -48,7 +50,7 @@ namespace PackagesCreator
                 return;
             }
 
-            if (global::PackagesCreator.PackagesCreator.PackageExists(PackageName))
+            if (PackagesCreator.PackageExists(PackageName))
             {
                 EditorGUILayout.HelpBox(
                     $"A package with the name {PackageName} already exists. Please choose a different name.",
@@ -56,7 +58,7 @@ namespace PackagesCreator
 
                 if (GUILayout.Button("Delete Package"))
                 {
-                    global::PackagesCreator.PackagesCreator.DeletePackage(PackageName);
+                    PackagesCreator.DeletePackage(PackageName);
                 }
 
                 return;
@@ -65,7 +67,7 @@ namespace PackagesCreator
             if (GUILayout.Button("Create Package"))
             {
                 {
-                    global::PackagesCreator.PackagesCreator.CreatePackage(new PackageCreationConfig
+                    PackagesCreator.CreatePackage(new PackageCreationConfig
                     {
                         PackageName = PackageName,
                         // Provide other necessary properties here

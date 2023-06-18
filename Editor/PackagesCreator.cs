@@ -7,8 +7,10 @@ using Debug = UnityEngine.Debug;
 
 namespace PackagesCreator
 {
-    public class PackagesCreator
+    public static class PackagesCreator
     {
+        #region Texts
+
         const string PackageCreationMessage = "Creating package {0} at {1}";
         const string DoneMessage = "Done! Package {0} created at {1}";
 
@@ -62,18 +64,16 @@ namespace PackagesCreator
             }}
         }}";
 
+        #endregion Texts
 
-        public const string FolderToCreatePackages = "MyPackages";
+        public static readonly EditorPrefString FolderToCreatePackages = "PackagesCreator.FolderToCreatePackages";
 
-        public static bool ExistsFolderToCreatePackages()
-        {
-            return Directory.Exists(GetBasePath());
-        }
+
+        public static bool ExistsFolderToCreatePackages() => Directory.Exists(GetBasePath());
 
         public static void CreateFolderToCreatePackages()
         {
             Directory.CreateDirectory(GetBasePath());
-            //refresh the assets folder
             AssetDatabase.Refresh();
         }
 
@@ -98,9 +98,9 @@ namespace PackagesCreator
 
         static string GetBasePath()
         {
-            //"(abs)/Assets/Packages/"
-            // inside the folder Assets create a folder called FolderToCreatePackages
-            return Path.Combine(Application.dataPath, FolderToCreatePackages);
+            var value = FolderToCreatePackages.Value;
+            var dataPath = Application.dataPath;
+            return string.IsNullOrEmpty(value) ? dataPath : Path.Combine(dataPath, value);
         }
 
         public static bool PackageExists(string packageName)
@@ -202,7 +202,6 @@ namespace PackagesCreator
             string githubDesktopUrl = $"x-github-client://openRepo/{workingDirectory}";
             Process.Start(githubDesktopUrl);
         }
-
 
 
         static async Task CreateDefaultScript(string packageName)
