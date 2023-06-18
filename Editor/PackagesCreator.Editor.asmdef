@@ -1,6 +1,6 @@
 {
   "name": "PackagesCreator.Editor",
-  "references": [],
+  "references": ["EditorTools.Editor"],
   "includePlatforms": [
     "Editor"
   ],
