@@ -6,10 +6,10 @@
   "unity": "2021.3",
   "unityRelease": "21f1",
   "dependencies": {
-    "com.orbitar.editortools" : "https://github.com/alvmivan-packages/EditorTools.git#master"
+    "com.orbitar.editortools": "https://github.com/alvmivan-packages/EditorTools.git#master"
   },
-"author" : {
- "name" : "Marcos Alvarez"
- "email" : "alvmivan@gmail.com"
-}
+  "author": {
+    "name": "Marcos Alvarez",
+    "email": "alvmivan@gmail.com"
+  }
 }
