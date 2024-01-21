@@ -15,13 +15,18 @@ namespace PackagesCreator
         const string PackageCreationMessage = "Creating package {0} at {1}";
         const string DoneMessage = "Done! Package {0} created at {1}";
 
+        //include author and email in package.json
         const string PackageJsonTemplate = @"{{
             ""name"": ""com.{0}.{1}"",
             ""version"": ""0.0.1"",
             ""displayName"": ""{2}"",
             ""description"": ""{3}"",
             ""unity"": ""2021.3"",
-            ""dependencies"": {{}}
+            ""dependencies"": {{}},
+            ""author"": {{
+                ""name"": ""{4}"",
+                ""email"": ""{5}""
+            }}            
         }}";
 
         const string RuntimeAsmdefTemplate = @"{{
@@ -121,6 +126,8 @@ namespace PackagesCreator
             var configCreateEditor = config.CreateEditor;
             var configCreateGitRepo = config.CreateGitRepo;
             var configPackageDescription = config.PackageDescription;
+            var configPackageAuthor = config.PackageAuthor;
+            var configPackageAuthorEmail = config.PackageAuthorEmail;
 
 
             Debug.Log(string.Format(PackageCreationMessage, packageName, fullPath));
@@ -136,7 +143,8 @@ namespace PackagesCreator
                 CreateTestsDirectory(packageName);
             }
 
-            await CreatePackageJson(packageName, configPackageDescription, company);
+            await CreatePackageJson(packageName, configPackageDescription, company, configPackageAuthor,
+                configPackageAuthorEmail);
 
             if (configCreateGitRepo)
             {
@@ -156,6 +164,7 @@ namespace PackagesCreator
                 OpenFolder(fullPath);
             }
         }
+
 
         static async Task CreateRuntimeAsmdef(string packageName)
         {
@@ -178,12 +187,15 @@ namespace PackagesCreator
             Directory.CreateDirectory(Path.Combine(GetBasePath(), packageName, "Tests"));
         }
 
-        static async Task CreatePackageJson(string packageName, string packageDescription, string company)
+        static async Task CreatePackageJson(string packageName, string configPackageDescription, string company,
+            string configPackageAuthor, string configPackageAuthorEmail)
         {
             var packagePath = Path.Combine(GetBasePath(), packageName);
             await File.WriteAllTextAsync(Path.Combine(packagePath, "package.json"),
-                string.Format(PackageJsonTemplate, company, packageName.ToLower(), packageName, packageDescription));
+                string.Format(PackageJsonTemplate, company, packageName.ToLower(), packageName,
+                    configPackageDescription, configPackageAuthor, configPackageAuthorEmail));
         }
+
 
         static void InitGitRepo(string packageName)
         {

@@ -67,11 +67,7 @@ namespace PackagesCreator
             if (GUILayout.Button("Create Package"))
             {
                 {
-                    PackagesCreator.CreatePackage(new PackageCreationConfig
-                    {
-                        PackageName = PackageName,
-                        // Provide other necessary properties here
-                    });
+                    PackagesCreator.CreatePackage(config);
                     Debug.Log($"Package {PackageName} created successfully!");
                 }
             }
